@@ -10,10 +10,19 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var dogImage = UIImage()
+    @State private var foxImage = UIImage()
+    
+    let animals = ["Foxes","Dogs"]
+    @State private var animalChosen = 0
     
     var body: some View {
         NavigationView {
             VStack {
+                Picker("Animal", selection: $animalChosen) {
+                    ForEach(0..<animals.count) {
+                        Text("\(self.animals[$0])")
+                    }
+                }
                 Button(action: {
                     // Get a new dog photo
                     fetchMoreCuteness()
@@ -75,42 +84,42 @@ struct ContentView: View {
     }
     
     // Get the actual image data
-        func fetchImage(from address: String) {
+    func fetchImage(from address: String) {
 
-            // 1. Prepare a URL that points to the image to be leaded
-            let url = URL(string: address)!
+        // 1. Prepare a URL that points to the image to be leaded
+        let url = URL(string: address)!
+        
+        // 2. Run the request and process the response
+        URLSession.shared.dataTask(with: url) { data, response, error in
             
-            // 2. Run the request and process the response
-            URLSession.shared.dataTask(with: url) { data, response, error in
+            // handle the result here – attempt to unwrap optional data provided by task
+            guard let imageData = data else {
                 
-                // handle the result here – attempt to unwrap optional data provided by task
-                guard let imageData = data else {
+                // Show the error message
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                
+                return
+            }
+            
+            // Update the UI on the main thread
+            DispatchQueue.main.async {
+                                    
+                // Attempt to create an instance of UIImage using the data from the server
+                guard let loadedDog = UIImage(data: imageData) else {
                     
-                    // Show the error message
-                    print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
-                    
+                    // If we could not load the image from the server, show a default image
+                    dogImage = UIImage(named: "Example")!
                     return
                 }
                 
-                // Update the UI on the main thread
-                DispatchQueue.main.async {
-                                        
-                    // Attempt to create an instance of UIImage using the data from the server
-                    guard let loadedDog = UIImage(data: imageData) else {
-                        
-                        // If we could not load the image from the server, show a default image
-                        dogImage = UIImage(named: "Example")!
-                        return
-                    }
-                    
-                    // Set the image loaded from the server so that it shows in the user interface
-                    dogImage = loadedDog
-                    
-                }
+                // Set the image loaded from the server so that it shows in the user interface
+                dogImage = loadedDog
                 
-            }.resume()
+            }
             
-        }
+        }.resume()
+        
+    }
     
 }
 
