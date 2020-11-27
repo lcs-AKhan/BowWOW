@@ -33,14 +33,14 @@ struct ContentView: View {
                         fetchFoxCuteness()
                     }) {
                         Text("More Please")
-                    }
+                    } .padding()
                 } else {
                     Button(action: {
                         // Get a new dog photo
                         fetchDogCuteness()
                     }) {
                         Text("More Please")
-                    }
+                    } .padding()
                 }
                 
                 Image(uiImage: dogImage)
