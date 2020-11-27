@@ -12,7 +12,10 @@ struct ContentView: View {
     @State private var dogImage = UIImage()
     @State private var foxImage = UIImage()
     
+    @State private var people: [Person] = []
+    
     let animals = ["Foxes","Dogs"]
+    
     @State private var animalChosen = 0
     
     var body: some View {
@@ -25,7 +28,7 @@ struct ContentView: View {
                 }
                 Button(action: {
                     // Get a new dog photo
-                    fetchMoreCuteness()
+                    fetchFoxCuteness()
                 }) {
                     Text("More Please")
                 }
@@ -35,14 +38,103 @@ struct ContentView: View {
                     .padding()
                     
                 Spacer()
+                
+                List(people) { person in
+                    Text(person.name)
+                }
             }
             .navigationTitle("Bow WOW!")
         }
+        .onAppear() {
+            fetchNames()
+        }
     }
     
+    func fetchFoxCuteness() {
+        
+        // 1. Prepare a URLRequest to send our encoded data as JSON
+        let url = URL(string: "https://randomfox.ca/floof/")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        // 2. Run the request and process the response
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            // handle the result here – attempt to unwrap optional data provided by task
+            guard let foxData = data else {
+                
+                // Show the error message
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                
+                return
+            }
+            
+            // It seems to have worked? Let's see what we have
+            print(String(data: foxData, encoding: .utf8)!)
+            
+            // Now decode from JSON into an array of Swift native data types
+            if let decodedFoxData = try? JSONDecoder().decode(RandomFox.self, from: foxData) {
+
+                print("Fox data decoded from JSON successfully")
+                print("URL is: \(decodedFoxData.image)")
+                
+                // Now fetch the image at the address we were given
+                fetchImage(from: decodedFoxData.image)
+
+            } else {
+
+                print("Invalid response from server.")
+            }
+            
+        }.resume()
+        
+    }
+
+    
+    func fetchNames() {
+        
+        // 1. Prepare a URLRequest to send our encoded data as JSON
+        let url = URL(string: "https://api.sheety.co/f5ce541fab2278c386111f607daa6a0c/testingSheety/sheet1")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        // 2. Run the request and process the response
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            // handle the result here – attempt to unwrap optional data provided by task
+            guard let namesData = data else {
+                
+                // Show the error message
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                
+                return
+            }
+            
+            // It seems to have worked? Let's see what we have
+            print(String(data: namesData, encoding: .utf8)!)
+            
+            // Now decode from JSON into an array of Swift native data types
+            if let decodedPersonData = try? JSONDecoder().decode(People.self, from: namesData) {
+
+                print("People data decoded from JSON successfully")
+
+               // Update the UI on the main thread
+                DispatchQueue.main.async {
+                    people = decodedPersonData.sheet1
+                }
+            } else {
+
+                print("Invalid response from server.")
+            }
+            
+        }.resume()
+        
+    }
     
     // Get a random pooch pic!
-    func fetchMoreCuteness() {
+    func fetchDogCuteness() {
         
         // 1. Prepare a URLRequest to send our encoded data as JSON
         let url = URL(string: "https://dog.ceo/api/breeds/image/random")!

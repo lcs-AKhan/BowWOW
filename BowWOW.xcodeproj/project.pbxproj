@@ -12,6 +12,8 @@
 		D93FF996256FEB99008069E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D93FF995256FEB99008069E5 /* Assets.xcassets */; };
 		D93FF999256FEB99008069E5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D93FF998256FEB99008069E5 /* Preview Assets.xcassets */; };
 		D93FF9A2256FF414008069E5 /* RandomDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93FF9A1256FF413008069E5 /* RandomDog.swift */; };
+		D965ADDD25716155004E5077 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = D965ADDC25716154004E5077 /* Person.swift */; };
+		D965ADE125716BF0004E5077 /* RandomFox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D965ADE025716BF0004E5077 /* RandomFox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		D93FF998256FEB99008069E5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D93FF99A256FEB99008069E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D93FF9A1256FF413008069E5 /* RandomDog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDog.swift; sourceTree = "<group>"; };
+		D965ADDC25716154004E5077 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		D965ADE025716BF0004E5077 /* RandomFox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomFox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				D93FF99A256FEB99008069E5 /* Info.plist */,
 				D93FF997256FEB99008069E5 /* Preview Content */,
 				D93FF9A1256FF413008069E5 /* RandomDog.swift */,
+				D965ADDC25716154004E5077 /* Person.swift */,
+				D965ADE025716BF0004E5077 /* RandomFox.swift */,
 			);
 			path = BowWOW;
 			sourceTree = "<group>";
@@ -141,8 +147,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D965ADE125716BF0004E5077 /* RandomFox.swift in Sources */,
 				D93FF994256FEB93008069E5 /* ContentView.swift in Sources */,
 				D93FF992256FEB93008069E5 /* BowWOWApp.swift in Sources */,
+				D965ADDD25716155004E5077 /* Person.swift in Sources */,
 				D93FF9A2256FF414008069E5 /* RandomDog.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
