@@ -25,13 +25,24 @@ struct ContentView: View {
                     ForEach(0..<animals.count) {
                         Text("\(self.animals[$0])")
                     }
+                }.pickerStyle(SegmentedPickerStyle())
+                
+                if animalChosen == 0 {
+                    Button(action: {
+                        // Get a new fox photo
+                        fetchFoxCuteness()
+                    }) {
+                        Text("More Please")
+                    }
+                } else {
+                    Button(action: {
+                        // Get a new dog photo
+                        fetchDogCuteness()
+                    }) {
+                        Text("More Please")
+                    }
                 }
-                Button(action: {
-                    // Get a new dog photo
-                    fetchFoxCuteness()
-                }) {
-                    Text("More Please")
-                }
+                
                 Image(uiImage: dogImage)
                     .resizable()
                     .scaledToFit()
