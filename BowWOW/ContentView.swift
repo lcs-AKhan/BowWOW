@@ -102,7 +102,6 @@ struct ContentView: View {
         
     }
 
-    
     func fetchNames() {
         
         // 1. Prepare a URLRequest to send our encoded data as JSON
